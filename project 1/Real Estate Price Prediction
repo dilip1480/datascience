@@ -1,1 +1,106 @@
 
+#!/usr/bin/env python
+# coding: utf-8
+
+# In[1]:
+
+
+import os
+os.chdir("D:\\")
+
+
+# In[7]:
+
+
+import pandas as pd
+df=pd.read_csv("bengaluru_house_prices.csv")
+df
+
+
+# In[8]:
+
+
+df.columns
+
+
+# In[10]:
+
+
+df1=df.drop(['area_type', 'availability','society'],axis="columns")
+df1.head()
+
+
+# In[15]:
+
+
+df1.isna().sum()
+
+
+# In[12]:
+
+
+df1["balcony"]=df1["balcony"].fillna(0)
+
+
+# In[14]:
+
+
+df1.dropna(inplace=True)
+
+
+# In[23]:
+
+
+df1["bhk"]=df1["size"].apply(lambda x:int(x.split(" ")[0]))
+df1.head()
+
+
+# In[76]:
+
+
+def is_correct(x):
+    final=x.split("-")
+    if len(final)==2:
+        return ((float(final[0])+float(final[1]))/2)
+    try:
+        return float(x)
+    except:
+        return None
+
+
+# In[78]:
+
+
+df1["sqft"]=df1["total_sqft"].apply(lambda x:is_correct(x))
+df1["sqft"].unique()
+
+
+# In[77]:
+
+
+is_correct('1133-1384')
+
+
+# In[83]:
+
+
+df1.price.unique()
+
+
+# In[97]:
+
+
+df1.to_csv("cleaned.csv")
+
+
+# In[96]:
+
+
+df1.isna().sum()
+
+
+# In[95]:
+
+
+df1=df1.sqft.dropna()
+
