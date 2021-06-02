@@ -30,7 +30,7 @@ df1=df.drop(['area_type', 'availability','society'],axis="columns")
 df1.head()
 
 
-# In[15]:
+# In[15]: 
 
 
 df1.isna().sum()
